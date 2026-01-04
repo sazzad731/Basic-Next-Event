@@ -1,5 +1,7 @@
-import clientPromise from "@/src/lib/mongodb";
-import bcrypt from "bcrypt";
+import "dotenv/config";
+
+import * as bcrypt from "bcrypt";
+import clientPromise from "../src/lib/mongodb";
 
 async function seedUsers() {
   const client = await clientPromise;
