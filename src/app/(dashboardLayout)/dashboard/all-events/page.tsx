@@ -1,5 +1,6 @@
 "use client";
 
+import { DeleteEventModal } from "@/components/designs/DeleteEventModal";
 import { UpdateEventModal } from "@/components/designs/UpdateEventModal";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,8 +25,14 @@ import { useEffect, useState } from "react";
 export default function AllEventsPage() {
   const [events, setEvents] = useState<TEvent[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedEventId, setSelectedEventId] = useState<string | null>(null);
+  const [selectedUpdateEventId, setSelectedUpdateEventId] = useState<
+    string | null
+  >(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [selectedDeleteEventId, setSelectedDeleteEventId] = useState<
+    string | null
+  >(null);
 
   const fetchEvents = async () => {
     try {
@@ -90,14 +97,21 @@ export default function AllEventsPage() {
                         size="sm"
                         variant="outline"
                         onClick={() => {
-                          setSelectedEventId(event.id!);
+                          setSelectedUpdateEventId(event.id!);
                           setModalOpen(true);
                         }}
                       >
                         Edit
                       </Button>
 
-                      <Button size="sm" variant="destructive" disabled>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => {
+                          setSelectedDeleteEventId(event.id!);
+                          setDeleteOpen(true);
+                        }}
+                      >
                         Delete
                       </Button>
                     </TableCell>
@@ -110,10 +124,17 @@ export default function AllEventsPage() {
       </Card>
 
       <UpdateEventModal
-        eventId={selectedEventId || ""}
+        eventId={selectedUpdateEventId || ""}
         open={modalOpen}
         onClose={setModalOpen}
         onUpdated={fetchEvents}
+      />
+
+      <DeleteEventModal
+        eventId={selectedDeleteEventId || ""}
+        open={deleteOpen}
+        onClose={setDeleteOpen}
+        onDeleted={fetchEvents}
       />
     </main>
   );

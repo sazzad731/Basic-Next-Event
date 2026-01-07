@@ -1,5 +1,5 @@
-import { Footer } from "@/components/shared/Footer/Footer";
-import { Header } from "@/components/shared/Header/Header";
+import Footer from "@/components/shared/Footer/Footer";
+import Header from "@/components/shared/Header/Header";
 import React from "react";
 
 export default function PublicLayout({

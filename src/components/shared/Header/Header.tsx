@@ -10,18 +10,27 @@ import {
 } from "@/components/ui/sheet";
 import { getAuthUser } from "@/service/getAuthUser";
 import { logout } from "@/service/logout";
+import { TUser } from "@/types/user";
 import { Calendar, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default async function Header() {
+export default function Header() {
   const router = useRouter();
+  const [user, setUser] = useState<TUser | null>(null);
+
   // if using localStorage
   // const { isAuthenticated } = useAuth();
 
   //if using cookies
-  const user = await getAuthUser();
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getAuthUser();
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
 
   const [mobileOpen, setMobileOpen] = useState(false);
 

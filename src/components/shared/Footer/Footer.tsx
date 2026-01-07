@@ -47,7 +47,7 @@ const footerSections = [
   },
 ];
 
-export const Footer = () => {
+export default function Footer() {
   return (
     <div className="flex flex-col">
       <div className="grow bg-muted" />
@@ -127,4 +127,4 @@ export const Footer = () => {
       </footer>
     </div>
   );
-};
+}
