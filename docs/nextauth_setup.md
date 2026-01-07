@@ -134,7 +134,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
 ### Email Password authentication:
 
-        ```typescript
+```typescript
 
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -154,54 +154,52 @@ email: { label: "Email", type: "email" },
 password: { label: "Password", type: "password" },
 },
 
-      async authorize(credentials) {
+     async authorize(credentials) {
 
-        const {client, db} = await mongoConnect();
+       const {client, db} = await mongoConnect();
 
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Missing credentials");
-        }
+       if (!credentials?.email || !credentials?.password) {
+         throw new Error("Missing credentials");
+       }
 
-        const user = await db.collections("users").findOne({credentials.email});
+       const user = await db.collections("users").findOne({credentials.email});
 
-        if (!user) {
-          throw new Error("User not found");
-        }
+       if (!user) {
+         throw new Error("User not found");
+       }
 
-        const isValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
+       const isValid = await bcrypt.compare(
+         credentials.password,
+         user.password
+       );
 
-        if (!isValid) {
-          throw new Error("Invalid password");
-        }
+       if (!isValid) {
+         throw new Error("Invalid password");
+       }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-        };
-      },
-    }),
-
+       return {
+         id: user.id,
+         email: user.email,
+         name: user.name,
+       };
+     },
+   }),
 ],
 
 callbacks: {
-async jwt({ token, user }) {
-if (user) {
-token.id = user.id;
-}
-return token;
-},
+   async jwt({ token, user }) {
+   if (user) {
+   token.id = user.id;
+   }
+   return token;
+   },
 
-    async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id as string;
-      }
-      return session;
-    },
-
+   async session({ session, token }) {
+     if (token && session.user) {
+       session.user.id = token.id as string;
+     }
+     return session;
+   },
 },
 
 pages: {
@@ -210,8 +208,7 @@ signIn: "/login",
 });
 
 export { handler as GET, handler as POST };
-
-        ```
+```
 
 That's it for basic setup! ✅
 
