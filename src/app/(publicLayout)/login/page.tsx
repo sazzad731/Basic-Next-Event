@@ -38,7 +38,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const onSubmit = async (data: LoginValues) => {
-    const res = await fetch("/api/auth/login", {
+    const res = await fetch("/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
